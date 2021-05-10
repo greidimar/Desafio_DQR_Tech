@@ -24,7 +24,7 @@ import java.nio.charset.Charset
 
 object Http_lista_moedas {
 
-    val url_lista_moedas = "http://api.currencylayer.com/list?access_key=5bd566dd2635bc1f6a730dcc794e8127"
+    val url_lista_moedas = "http://api.currencylayer.com/list?access_key=0f4741a4d11b1113d380d8509137dece"
 
 
     @Throws(IOException::class)

@@ -25,7 +25,7 @@ import java.nio.charset.Charset
 object Http_Retorn_Quotes {
 
     val url_lista_quotes =
-        "http://api.currencylayer.com/live?access_key=5bd566dd2635bc1f6a730dcc794e8127&currencies="
+        "http://api.currencylayer.com/live?access_key=0f4741a4d11b1113d380d8509137dece&currencies="
 
 
     @Throws(IOException::class)
