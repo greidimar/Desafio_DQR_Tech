@@ -172,7 +172,17 @@ class MainActivity : AppCompatActivity() {
         {
             quoteslist.clear()
             quoteslist.addAll(result)
-            Calculando_Cotacao(quoteslist.get(0).cotacao.toString(), quoteslist.get(1).cotacao.toString())
+            if (quoteslist.size > 1) {
+                Calculando_Cotacao(
+                    quoteslist.get(0).cotacao.toString(),
+                    quoteslist.get(1).cotacao.toString()
+                )            }
+            else {
+                Calculando_Cotacao(
+                    quoteslist.get(0).cotacao.toString(),
+                    quoteslist.get(0).cotacao.toString()
+                )
+            }
         }
     }
 
@@ -180,18 +190,25 @@ class MainActivity : AppCompatActivity() {
     {
         //calculo da cotação, transformo em dolar a primeira moeda e depois o destino de dolar para a moeda de destino
         try {
-            var v_quote_origem: Double = quote_origem.toDouble()
-            var v_quote_destino: Double = quote_destino.toDouble()
+
+            if ( quote_origem == quote_destino)
+            {
+                txt_valor.text = edt_valor.text.toString()
+            }
+            else {
+                var v_quote_origem: Double = quote_origem.toDouble()
+                var v_quote_destino: Double = quote_destino.toDouble()
 
 
-            var v_valor: Double = edt_valor.text.toString().toDouble()
-            var valor_convert_dolar_origem: Double = (v_valor / v_quote_origem)
+                var v_valor: Double = edt_valor.text.toString().toDouble()
+                var valor_convert_dolar_origem: Double = (v_valor / v_quote_origem)
 
-            var valor_convert_destino: Double = (valor_convert_dolar_origem * v_quote_destino)
+                var valor_convert_destino: Double = (valor_convert_dolar_origem * v_quote_destino)
 
-            valor_convert_destino = round2(valor_convert_destino)
+                valor_convert_destino = round2(valor_convert_destino)
 
-            txt_valor.text = valor_convert_destino.toString()
+                txt_valor.text = valor_convert_destino.toString()
+            }
 
         } catch (e: Exception) {
             Toast.makeText(this@MainActivity, "Erro nos calculos", Toast.LENGTH_LONG).show()
