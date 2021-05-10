@@ -29,12 +29,8 @@ import kotlin.math.round
 
 class MainActivity : AppCompatActivity() {
 
-
     var state: String? = null
     var origem_destino: String? = null
-
-    var quote_origem_result: String? = null
-    var quote_destino_result: String? = null
 
     //para a quotes
     private val quoteslist = mutableListOf<list_quotes>()
@@ -67,29 +63,36 @@ class MainActivity : AppCompatActivity() {
 
         btn_moeda_origem.setOnClickListener {
 
-                 origem_destino = "O"
+            try {
+                origem_destino = "O"
                 val intent = Intent(this@MainActivity, Lista_de_Moedas::class.java)
                 intent.putExtra(Lista_de_Moedas.EXTRA_STATE, state)
                 startActivityForResult(intent, REQUEST_STATE)
 
-                if(savedInstanceState != null)
-                {
-                    state =savedInstanceState.getString(EXTRA_STATE)
-                    txt_moeda_origem.text =  state
+                if (savedInstanceState != null) {
+                    state = savedInstanceState.getString(EXTRA_STATE)
+                    txt_moeda_origem.text = state
                 }
+            } catch (e: Exception) {
+                Toast.makeText(this@MainActivity, e.toString(), Toast.LENGTH_LONG).show()
             }
+        }
 
 
         btn_destino.setOnClickListener {
-            origem_destino = "D"
-            val intent = Intent(this@MainActivity, Lista_de_Moedas::class.java)
-            intent.putExtra(Lista_de_Moedas.EXTRA_STATE, state)
-            startActivityForResult(intent, REQUEST_STATE)
 
-            if(savedInstanceState != null)
-            {
-                state =savedInstanceState.getString(EXTRA_STATE)
-                txt_moeda_destino.text =  state
+            try {
+                origem_destino = "D"
+                val intent = Intent(this@MainActivity, Lista_de_Moedas::class.java)
+                intent.putExtra(Lista_de_Moedas.EXTRA_STATE, state)
+                startActivityForResult(intent, REQUEST_STATE)
+
+                if (savedInstanceState != null) {
+                    state = savedInstanceState.getString(EXTRA_STATE)
+                    txt_moeda_destino.text = state
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this@MainActivity, e.toString(), Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -97,23 +100,24 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
     {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode ==  Activity.RESULT_OK && requestCode == REQUEST_STATE)
-        {
-            state = data?.getStringExtra(Lista_de_Moedas.EXTRA_RESULT)
 
-            if (origem_destino == "O")
-            {
-                txt_moeda_origem.text =  state
-            }
-            else
-            {
-                txt_moeda_destino.text =  state
+        try {
+            if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_STATE) {
+                state = data?.getStringExtra(Lista_de_Moedas.EXTRA_RESULT)
+
+                if (origem_destino == "O") {
+                    txt_moeda_origem.text = state
+                } else {
+                    txt_moeda_destino.text = state
+                }
+
+                if (txt_moeda_origem.text.toString().length > 0 && txt_moeda_destino.text.toString().length > 0 && edt_valor.text.toString().length > 0) {
+                    Download_qoutes()
+                }
             }
 
-            if (txt_moeda_origem.text.toString().length > 0  && txt_moeda_destino.text.toString().length > 0  && edt_valor.text.toString().length > 0 )
-            {
-                Download_qoutes()
-            }
+        } catch (e: Exception) {
+            Toast.makeText(this@MainActivity, e.toString(), Toast.LENGTH_LONG).show()
         }
     }
 
@@ -195,7 +199,16 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun round2(x: Double) = round(x * 100) / 100
+    fun round2(x: Double):Double {
+        try {
+            var arredondar: Double = round(x * 100) / 100
+            return arredondar
+        }
+        catch (e: Exception) {
+            Toast.makeText(this@MainActivity, "Erro nos calculos", Toast.LENGTH_LONG).show()
+            return 0.0
+        }
+    }
 
     companion object
     {
