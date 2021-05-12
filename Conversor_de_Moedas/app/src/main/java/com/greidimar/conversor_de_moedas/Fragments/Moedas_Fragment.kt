@@ -87,12 +87,7 @@ class Moedas_Fragment : Fragment(), CoroutineScope {
                 id: Long
             ) {
                 val type = parent?.getItemAtPosition(position).toString()
-
-                if (type == "Crescente") {
-                    Ordenacao("Crescente")
-                } else {
-                    Ordenacao("Decrescente")
-                }
+                Ordenacao(type)
             }
         }
         ////
@@ -126,7 +121,7 @@ class Moedas_Fragment : Fragment(), CoroutineScope {
 
 
         //download lista de moedas
-        Download_Moedas("Crescente")
+        Download_Moedas("Sigla Crescente")
     }
 
 
@@ -184,9 +179,25 @@ class Moedas_Fragment : Fragment(), CoroutineScope {
         {
             moedaslist.clear()
             moedaslist.addAll(result)
-            moedaslist.sortWith(compareBy({it.sigla}, {it.sigla}))
-            if(ordem == "Decrescente")
+            if(ordem == "Sigla Crescente")
             {
+                moedaslist.sortWith(compareBy({it.sigla}, {it.sigla}))
+            }
+            //
+            if(ordem == "Sigla Decrescente")
+            {
+                moedaslist.sortWith(compareBy({it.sigla}, {it.sigla}))
+                moedaslist.reverse()
+            }
+            //
+            if(ordem == "País Crescente")
+            {
+                moedaslist.sortWith(compareBy({it.pais}, {it.pais}))
+            }
+            //
+            if(ordem == "País Decrescente")
+            {
+                moedaslist.sortWith(compareBy({it.pais}, {it.pais}))
                 moedaslist.reverse()
             }
         }
