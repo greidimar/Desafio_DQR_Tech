@@ -65,7 +65,6 @@ class Moedas_Fragment : Fragment(), CoroutineScope {
         return inflater.inflate(R.layout.fragment_moedas, container, false)
     }
 
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -73,8 +72,6 @@ class Moedas_Fragment : Fragment(), CoroutineScope {
         val arrayOrdenacao= listOf<String>("Sigla Crescente","Sigla Decrescente","País Crescente","País Decrescente")
         val arrayAdapter_Ordem = ArrayAdapter<String>(requireContext(), R.layout.support_simple_spinner_dropdown_item, arrayOrdenacao)
         sp_ordenar.adapter = arrayAdapter_Ordem
-
-        /////
 
         sp_ordenar?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -97,7 +94,6 @@ class Moedas_Fragment : Fragment(), CoroutineScope {
         list_view_moedas.adapter = list_adapter
         list_view_moedas.choiceMode = AbsListView.CHOICE_MODE_SINGLE
 
-
         btn_pesquisar.setOnClickListener {
             //seleciona a moeda deixa no topo da lista
             Pesquisar()
@@ -119,12 +115,9 @@ class Moedas_Fragment : Fragment(), CoroutineScope {
             return@setOnEditorActionListener false
         }
 
-
         //download lista de moedas
         Download_Moedas("Sigla Crescente")
     }
-
-
 
     private fun Download_Moedas(ordem:String) {
         try {
@@ -153,7 +146,6 @@ class Moedas_Fragment : Fragment(), CoroutineScope {
             Toast.makeText(requireContext(), "Erro nos calculos", Toast.LENGTH_LONG).show()
         }
     }
-
 
     private fun showProgress_1(show: Boolean)
     {
@@ -212,7 +204,6 @@ class Moedas_Fragment : Fragment(), CoroutineScope {
         downloadJob = null
     }
 
-
     //procura a moeda
     private fun Pesquisar() {
         try {
@@ -221,6 +212,7 @@ class Moedas_Fragment : Fragment(), CoroutineScope {
                 var p_lp: String = moedaslist.get(index).pais.toUpperCase()
                 var p_e: String = edt_pesquisar.text.toString().toUpperCase()
 
+                list_view_moedas.requestFocusFromTouch()  //para deixar selecionado a busca
                 //se tem 3 caracteres procuro na sigla se tem mias de 3 caractese procuro no pais
                 if (p_e.length <= 3) {
                     if (p_ls == p_e) {
@@ -231,6 +223,7 @@ class Moedas_Fragment : Fragment(), CoroutineScope {
                         list_view_moedas.setSelection(index)
                     }
                 }
+
             }
         } catch (e: Exception) {
             Toast.makeText(requireContext(), "Erro ao pesquisar", Toast.LENGTH_LONG).show()
